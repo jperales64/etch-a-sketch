@@ -1,7 +1,22 @@
 let numberOfRowsSelected = 16;
 const container = document.querySelector('.container');
 document.querySelector('.reset-button').onclick = reset;
+let isColorWhite = false;
 
+function connectSlider() {
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+        removeAllChildNodes(container);
+        start(this.value);
+    }
+}
+
+connectSlider();
 start(numberOfRowsSelected);
 
 function start(numberOfRowsSelected) {
@@ -44,8 +59,10 @@ function setUpCells() {
         // and for each one we add a 'mouseover' listener
         cell.addEventListener('mouseover', () => {
             if (!cell.style.backgroundColor || cell.style.backgroundColor == 'black') {
-                cell.style.backgroundColor = getRandomColor();
-                cell.style.color = cell.style.backgroundColor;
+                if (!isColorWhite) {
+                    cell.style.backgroundColor = getRandomColor();
+                    cell.style.color = cell.style.backgroundColor;
+                }
 
             } else {
                 let orignalRgb = cell.style.color;
@@ -95,17 +112,4 @@ function reset() {
     cells.forEach((cell) => {
         cell.style.backgroundColor = 'black';
     });
-
-    let answer = prompt('Enter the number of rows you wish to use! The Grid will remain a square.', '16');
-
-    let numcheck = parseInt(answer);
-
-    removeAllChildNodes(container);
-    if (answer != null && numcheck == answer) {
-        start(answer);
-    } else {
-        start(16);
-    }
-
-
 }

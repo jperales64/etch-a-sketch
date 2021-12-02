@@ -50,3 +50,32 @@
       flex-shrink: 1;
       flex-basis: 1;
   }
+  
+  .game-name {
+      font-size: 10vw;
+      color: #aaaaaa;
+  }
+  
+  .settings {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .range-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: whitesmoke;
+  }
+  
+  .range-value {
+      color: wheat;
+      padding: 10px;
+      flex-grow: 0;
+  }
+  
+  .grid-text {
+      padding-right: 5px;
+  }

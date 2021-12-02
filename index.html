@@ -7,9 +7,18 @@
 
 </head>
 
+
 <body>
-    <header>Etcha-a-Sketch</header>
-    <button class="reset-button">Reset</button>
+    <header class="game-name">Etch-a-Sketch</header>
+    <div class="settings">
+        <button class="reset-button">Reset Grid</button>
+        <div class="range-container">
+            <div class="grid-text">Size of Grid</div>
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            <div class="range-value" id="demo"></div>
+        </div>
+    </div>
+
     <script src="main.js" defer></script>
     <div class="container">
 

@@ -1,52 +1,41 @@
+let numberOfRowsSelected = 32;
+let numberOfColumnsSelected = 32;
+
+const container = document.querySelector('.container');
+
+
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
     for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
+        color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
-  
+}
 
-// Create a center tag to center all the elements
-var center = document.createElement('center');
- 
-// Create a table element
-var ChessTable = document.createElement('table');
-for (var i = 0; i < 16; i++) {
 
-    // Create a row
-    var tr = document.createElement('tr');
-    for (var j = 0; j < 16; j++) {
+for (let i = 0; i < numberOfRowsSelected; i++) {
 
-        // Create a cell
-        var td = document.createElement('td');
+    let row = document.createElement('div');
+    row.classList.add('row');
 
-        td.setAttribute('class', 'cell whitecell');
-        tr.appendChild(td);
+    for (let j = 0; j < numberOfColumnsSelected; j++) {
+        let unit = document.createElement('div');
+        unit.classList.add('cell', 'blackcell');
+        row.appendChild(unit);
     }
 
-    // Append the row
-    ChessTable.appendChild(tr);
+    container.appendChild(row);
 }
-center.appendChild(ChessTable);
 
-// Modifying table attribute properties
-ChessTable.setAttribute('cellspacing', '0');
+const cells = document.querySelectorAll('.cell');
 
-
-const container = document.querySelector('.container');
-container.appendChild(center);
-
-const squares = document.querySelectorAll('.cell');
-
-squares.forEach((button) => {
+cells.forEach((cell) => {
 
     // and for each one we add a 'mouseover' listener
-    button.addEventListener('mouseover', () => {
-        
-        button.style.backgroundColor = getRandomColor(); 
+    cell.addEventListener('mouseover', () => {
+
+        cell.style.backgroundColor = getRandomColor();
 
     });
 });
-

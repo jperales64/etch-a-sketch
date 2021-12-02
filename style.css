@@ -3,17 +3,24 @@
       padding: 0;
   }
   
+  button {
+      width: max-content;
+      margin: 20px;
+  }
+  
   body {
       display: flex;
-      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: black;
   }
   
   .cell {
-      border: 1.5px solid green;
-      border-style: inset;
       flex-grow: 1;
       flex-shrink: 1;
       flex-basis: 1;
+      border: 1.5px solid #434343;
+      border-style: inset;
   }
   
   .blackcell {
@@ -25,6 +32,8 @@
   }
   
   .container {
+      border: 1.5px solid green;
+      border-style: inset;
       background-color: black;
       width: 500px;
       height: 500px;

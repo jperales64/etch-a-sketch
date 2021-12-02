@@ -1,8 +1,13 @@
-let numberOfRowsSelected = 32;
-let numberOfColumnsSelected = 32;
-
+let numberOfRowsSelected = 16;
 const container = document.querySelector('.container');
+document.querySelector('.reset-button').onclick = reset;
 
+start(numberOfRowsSelected);
+
+function start(numberOfRowsSelected) {
+    createGrid(numberOfRowsSelected);
+    setUpCells();
+}
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
@@ -13,29 +18,94 @@ function getRandomColor() {
     return color;
 }
 
+function createGrid(numberOfRowsSelected) {
+    for (let i = 0; i < numberOfRowsSelected; i++) {
 
-for (let i = 0; i < numberOfRowsSelected; i++) {
+        let row = document.createElement('div');
+        row.classList.add('row');
 
-    let row = document.createElement('div');
-    row.classList.add('row');
+        for (let j = 0; j < numberOfRowsSelected; j++) {
+            let unit = document.createElement('div');
+            unit.classList.add('cell', 'blackcell');
+            row.appendChild(unit);
+        }
 
-    for (let j = 0; j < numberOfColumnsSelected; j++) {
-        let unit = document.createElement('div');
-        unit.classList.add('cell', 'blackcell');
-        row.appendChild(unit);
+        container.appendChild(row);
     }
-
-    container.appendChild(row);
 }
 
-const cells = document.querySelectorAll('.cell');
 
-cells.forEach((cell) => {
 
-    // and for each one we add a 'mouseover' listener
-    cell.addEventListener('mouseover', () => {
+function setUpCells() {
+    const cells = document.querySelectorAll('.cell');
 
-        cell.style.backgroundColor = getRandomColor();
+    cells.forEach((cell) => {
 
+        // and for each one we add a 'mouseover' listener
+        cell.addEventListener('mouseover', () => {
+            if (!cell.style.backgroundColor || cell.style.backgroundColor == 'black') {
+                cell.style.backgroundColor = getRandomColor();
+                cell.style.color = cell.style.backgroundColor;
+
+            } else {
+                let orignalRgb = cell.style.color;
+                let rgb = cell.style.backgroundColor;
+
+                let colors = ["red", "green", "blue"]
+
+                // Getting the index of "(" and ")" 
+                // by using the indexOf() method
+                let colorArr = rgb.slice(
+                    rgb.indexOf("(") + 1,
+                    rgb.indexOf(")")
+                ).split(", ");
+
+                let originalColorArr = orignalRgb.slice(
+                    orignalRgb.indexOf("(") + 1,
+                    orignalRgb.indexOf(")")
+                ).split(", ");
+
+
+                let obj = new Object();
+
+                // Insert the values into obj 
+                colorArr.forEach((k, i) => {
+
+                    obj[colors[i]] = k - (originalColorArr[i] / 10)
+                })
+
+
+                cell.style.backgroundColor = `rgb(${obj[colors[0]]}, ${obj[colors[1]]}, ${obj[colors[2]]})`
+
+            }
+        });
     });
-});
+}
+
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+function reset() {
+
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach((cell) => {
+        cell.style.backgroundColor = 'black';
+    });
+
+    let answer = prompt('Enter the number of rows you wish to use! The Grid will remain a square.', '16');
+
+    let numcheck = parseInt(answer);
+
+    removeAllChildNodes(container);
+    if (answer != null && numcheck == answer) {
+        start(answer);
+    } else {
+        start(16);
+    }
+
+
+}
